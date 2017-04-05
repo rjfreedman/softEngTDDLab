@@ -109,6 +109,7 @@ test('recruiter function TEST', function(t) {
   var test6Array = inputArr;
   var test7Array = inputArr;
   var test8Array = inputArr;
+  var test9Array = inputArr;
 
 
   //----------------------------------------------------------------------------
@@ -374,6 +375,50 @@ test('recruiter function TEST', function(t) {
   t.deepEqual(potentialHiresArray8[1].name, "NAME5", "potential hire 1 is in correct order");
   t.deepEqual(potentialHiresArray8[2].name, "NAME0", "potential hire 2 is in correct order");
   t.deepEqual(potentialHiresArray8[3].name, "NAME2", "potential hire 3 is in correct order");
+
+  //----------------------------------------------------------------------------
+
+  //Assign values such that the order of hirable interns should be 3,0,2,5...
+  //Then verify by checking the output...
+  test9Array[0].name="NAME0";
+  test9Array[1].name="NAME1";
+  test9Array[2].name="NAME2";
+  test9Array[3].name="NAME3";
+  test9Array[4].name="NAME4";
+  test9Array[5].name="NAME5";
+
+  //Give all intern objects the same (hirable) GPA so the order will depend on degree, except for [0] (which should depend on wage/experience, then on GPA)
+  test9Array[0].gpa=3.0;
+  test9Array[1].gpa=4.0;
+  test9Array[2].gpa=4.0;
+  test9Array[3].gpa=4.0;
+  test9Array[4].gpa=4.0;
+  test9Array[5].gpa=4.0;
+
+  //Give all the same "experiance" level so the gpa and wage will determine the order
+  test9Array[0].experiance=2;
+  test9Array[1].experiance=2;
+  test9Array[2].experiance=2;
+  test9Array[3].experiance=2;
+  test9Array[4].experiance=2;
+  test9Array[5].experiance=2;
+
+  test9Array[0].degree="Petroleum Engineering"; //should be second (highest wage, next highest GPA)
+  test9Array[1].degree="z"; //unrecognizable degree --> UNHIRABLE
+  test9Array[2].degree="EE"; //should be third based on wage
+  test9Array[3].degree="Petroleum Engineering"; //should be first (highest wage and GPA)
+  test9Array[4].degree="z"; //unrecognizable degree --> UNHIRABLE
+  test9Array[5].degree="Software Engineering"; //should be second based on wage
+
+  //run the recruiter function on the array now and test if the output is as expected
+  var potentialHiresArray9 = recruiter.recruiter(test9Array);
+
+  t.deepEqual(potentialHiresArray9.length, 4, "correct number of potential hires (4)");
+  t.deepEqual(potentialHiresArray9[0].name, "NAME3", "potential hire 0 is in correct order");
+  t.deepEqual(potentialHiresArray9[1].name, "NAME0", "potential hire 1 is in correct order");
+  t.deepEqual(potentialHiresArray9[2].name, "NAME2", "potential hire 2 is in correct order");
+  t.deepEqual(potentialHiresArray9[3].name, "NAME5", "potential hire 3 is in correct order");
+
 
   //end test
   t.end();
