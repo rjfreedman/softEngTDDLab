@@ -10,7 +10,7 @@ function getValueFromWageAndExp(wage, fullYearsExp) {
 	} else {
 		modYears = fullYearsExp;
 	}
-	modYears = 1 + (modYears - 1) * 0.2;
+	modYears = 1 + (modYears - 1) * 0.2; //20% extra for every year over 1 worked (up to 5 yrs)
 	return modYears * wage;
 }
 
